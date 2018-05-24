@@ -6,6 +6,7 @@
     if ($(this).length > 0) {
       id = $(this).attr("id");
       mentioning_user = '';
+
       CKEDITOR.instances[id].on("contentDom", function() {
         return this.document.on("keypress", function(e) {
           return actionsNormalChars(e);
@@ -80,6 +81,10 @@
           word = currentWord().text;
           selected = $(".users_mentions_list li.suggested_mention_selected");
           if (isMention(word) === true) {
+            typedCurrentWord = word.substring(1, word.length);
+            mentioning_user = word.substring(1, word.length);
+            suggest_users(mentioning_user);
+            
             if (key === 37 || key === 39) {
               word = currentWord().text;
               if (isMention(word) === true) {
@@ -256,3 +261,4 @@
     }
   };
 })(jQuery);
+

@@ -1,0 +1,13 @@
+<% if @issue %>
+  <%= javascript_include_tag 'mention.js', :plugin => 'journal_user_tags' %>
+  <%= stylesheet_link_tag 'mentions.css', :plugin => 'journal_user_tags' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      window.setTimeout(function(){
+        $('#issue_notes').mentions();
+        console.log("yay")
+      }, 1000);
+
+     })
+  </script>
+<% end %>

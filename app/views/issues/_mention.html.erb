@@ -1,0 +1,5 @@
+<ul class="users_mentions_list">
+  <% User.all.each do |user| %>
+    <li id="user_mentions" class="hide" tabindex: "0"><%= user.login %></li>
+  <% end %>
+</ul>
