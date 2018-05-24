@@ -1,0 +1,4 @@
+<% last_user = issue.journals.order(:created_on).last.try(:user) %>
+<% if issue.assigned_to_id == User.current.id && last_user && last_user.id != User.current.id %>
+  <%= link_to l("button_issue_answer", user_name: last_user.name), issues_answer_path(id: issue.id, to_user_id: last_user.id), class: "icon icon-comment button-positive" %>
+<% end %>  
