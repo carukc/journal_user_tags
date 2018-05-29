@@ -16,7 +16,8 @@ module JournalUserTags
   class Hooks < Redmine::Hook::ViewListener
     render_on :view_issue_sidebar_top, :partial => 'issues/issue_answer_button'
     render_on :view_issues_edit_notes_bottom, :partial => 'issues/mention' 
-    render_on :view_layouts_base_html_head, :partial => "issues/js_css"
+    render_on :view_layouts_base_html_head, :partial => "issues/css"
+    render_on :view_layouts_base_body_bottom, :partial => "issues/js"
   end
   
 end
