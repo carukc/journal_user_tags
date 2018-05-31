@@ -3,7 +3,12 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $(".primary-actions a").click(function(){
-        $('#issue_notes').mentions();
+        mentionInterval = window.setInterval(function(){
+          if (typeof(CKEDITOR) != "undefined"){
+            $('#issue_notes').mentions();
+            window.clearInterval(mentionInterval);
+          }
+        }, 250);
       });
      })
   </script>
