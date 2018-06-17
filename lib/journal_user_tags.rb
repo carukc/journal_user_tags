@@ -13,6 +13,33 @@ module JournalUserTags
     end
   end  
   
+  module IssueExtension
+    
+    def answer_to_users_for(user)
+      if @_answer_to_users_for.present?
+        return @_answer_to_users_for
+      else
+        answer_to_users_for = []
+        
+        if self.assigned_to == user
+          # allow to answer to author when ticket is assigned to user and no journal exists
+          # TODO: Should answering to author always be an option? 
+          if self.journals.empty? && self.author != user
+            answer_to_users_for << self.author
+          else
+            # getting last twso users from journal
+            last_users = self.journals.where.not(user_id: user.id).order(:created_on).group(:user_id).map(&:user).compact.last(2)
+        
+            answer_to_users_for = last_users
+          end
+        end  
+          
+        @_answer_to_users_for = answer_to_users_for
+      end
+    end
+    
+  end
+  
   class Hooks < Redmine::Hook::ViewListener
     render_on :view_issue_sidebar_top, :partial => 'issues/issue_answer_button'
     render_on :view_issues_edit_notes_bottom, :partial => 'issues/mention' 
@@ -37,5 +64,5 @@ IssuesController.class_eval do
   end
 end
 
-
 Journal.send :prepend, JournalUserTags::JournalExtension
+RedmineExtensions::PatchManager.register_model_patch 'Issue', 'JournalUserTags::IssueExtension'
