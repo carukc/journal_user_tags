@@ -1,5 +1,5 @@
 <ul class="users_mentions_list">
-  <% @issue.project.members.each do |member| %>
-    <li id="user_mentions" class="hide" tabindex: "0"><%= member.user.login %></li>
+  <% @issue.project.members.sort_by {|m| m.user.login.downcase }.each do |member| %>
+    <li id="user_mentions" class="hide" tabindex: "0"><%= member.user.login.downcase %></li>
   <% end %>
 </ul>
